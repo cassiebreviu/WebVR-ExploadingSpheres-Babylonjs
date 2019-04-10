@@ -1,5 +1,6 @@
-import { Engine, Scene, HemisphericLight, Vector3, CannonJSPlugin } from "babylonjs";
+import { Engine, Scene, HemisphericLight, Vector3, CannonJSPlugin, StandardMaterial, DirectionalLight, Color4 } from "babylonjs";
 import * as GUI from  "babylonjs-gui";
+import {CloudProceduralTexture, GrassProceduralTexture} from "babylonjs-procedural-textures";
 import { addSpheres } from "./sphere";
 import { addLabelToScene, updateScore } from "./score";
 var canvas: any = document.getElementById("renderCanvas");
@@ -8,13 +9,13 @@ var engine: Engine = new Engine(canvas, true);
 function createScene(): Scene {
     // Create scene
     var scene: Scene = new Scene(engine);
-
+    var sphereLight = new DirectionalLight("dir02", new Vector3(0.2, -1, 0), scene);
+    sphereLight.position = new Vector3(0, 80, 0);
     var gravityVector = new BABYLON.Vector3(0, -1, 0);
     scene.enablePhysics(gravityVector, new CannonJSPlugin);
 
-    var light = new HemisphericLight("light",Vector3.Zero(),scene);
+    scene.clearColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Black());
 
-    // Parameters : name, position, scene
     var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
     camera.checkCollisions = true;
     camera.applyGravity = true;
@@ -24,17 +25,19 @@ function createScene(): Scene {
     // Attach the camera to the canvas
     camera.attachControl(canvas, true);
 
+    var grassMaterial = new BABYLON.StandardMaterial("grass", scene);
+    var grassTexture = new GrassProceduralTexture("textgrass", 256, scene);
+    grassMaterial.ambientTexture = grassTexture;
+    grassMaterial.diffuseTexture= grassTexture;
+
     // Create Ground
     var ground = BABYLON.Mesh.CreatePlane("ground", 25.0, scene);
-    ground.position = new BABYLON.Vector3(0, -10, 0);
+    ground.position = new BABYLON.Vector3(0, -5, 0);
     ground.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
 
-    ground.material = new BABYLON.StandardMaterial("groundMat", scene);
-    ground.material.backFaceCulling = false;
-    ground.receiveShadows = true;
-    //ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0, restitution: 0 }, scene);
-
-       // Create the 3D UI manager
+    ground.material = grassMaterial;
+ 
+    // Create the 3D UI manager
     var manager = new GUI.GUI3DManager(scene);
     // Create a horizontal stack panel
     var panel = new GUI.StackPanel3D();

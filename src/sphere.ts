@@ -12,17 +12,11 @@ export function addSpheres(scene: Scene) {
 var addSphere = function (scene: Scene) {
 
     // Create sphere
-    var sphereLight = new DirectionalLight("dir02", new Vector3(0.2, -1, 0), scene);
-    sphereLight.position = new Vector3(0, 80, 0);
-
     var sphere: Mesh = MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
     sphere.position = new Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
     sphere.material = new BABYLON.StandardMaterial("sphere material", scene)
     sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
-    var shadowGenerator = new ShadowGenerator(2048, sphereLight);
-    shadowGenerator.addShadowCaster(sphere);
-
-
+  
     // Material
     var materialAmiga = new StandardMaterial("amiga", scene);
     materialAmiga.diffuseTexture = new Texture("textures/amiga.jpg", scene);

@@ -19,7 +19,7 @@ export function addParticlesToMesh(mesh: AbstractMesh, scene: Scene): ParticleSy
     particleSystem.maxEmitBox = new Vector3(1, 0, 0); // To...
 
     // Colors of all particles
-    particleSystem.color1 = new Color4(0.7, 0.8, 1.0, 1.0);
+    particleSystem.color1 = new Color4(1.0,1.0, 0, 0);
     particleSystem.color2 = new Color4(0.2, 0.5, 1.0, 1.0);
     particleSystem.colorDead = new Color4(0, 0, 0.2, 0.0);
 
