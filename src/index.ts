@@ -16,7 +16,8 @@ function createScene(): Scene {
 
     scene.clearColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Black());
 
-    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
+    var camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 0, -10), scene);
+    //var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
     camera.checkCollisions = true;
     camera.applyGravity = true;
     // Targets the camera to a particular position. In this case the scene origin
